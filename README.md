@@ -1,7 +1,7 @@
 # Proyecto Backend
 
 Este es el backend creada con Node.js, Express, MySQL, y nodemailer para el envío de correos electrónicos de confirmación tras el registro de usuarios.
----
+
 
 ## Características
 
@@ -11,7 +11,7 @@ Este es el backend creada con Node.js, Express, MySQL, y nodemailer para el env�
 - **Envío de correos electrónicos** de confirmación usando nodemailer.
 - Manejo de errores y validaciones básicas.
 
---
+---
 
 </div>
 
@@ -29,7 +29,7 @@ Este es el backend creada con Node.js, Express, MySQL, y nodemailer para el env�
 
 </div>
 
---
+---
 ## Instalación
 
 1. **Clonar el repositorio**:
