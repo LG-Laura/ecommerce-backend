@@ -1,9 +1,9 @@
-### Proyecto Backend
+
 <p align="center" style="font-size: 24px;">
   <strong>🚧Este proyecto está actualmente en fase de desarrollo.</strong><br>
 </p>
 
-## Características
+## Características Backend
 
 - **API RESTful** construida con Node.js y Express.
 - **Base de datos**: MySQL para la gestión de usuarios.
