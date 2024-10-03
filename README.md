@@ -1,6 +1,6 @@
 # Proyecto Backend
 
-Este es el backend creada con Node.js, Express, MySQL, y nodemailer para el envío de correos electrónicos de confirmación tras el registro de usuarios.
+Este es el backend creada con Node.js, Express, MySQL, y SendGrid para el envío de correos electrónicos de confirmación tras el registro de usuarios.
 
 
 ## Características
@@ -8,7 +8,7 @@ Este es el backend creada con Node.js, Express, MySQL, y nodemailer para el env�
 - **API RESTful** construida con Node.js y Express.
 - **Base de datos**: MySQL para la gestión de usuarios.
 - **Autenticación**: Registro y login de usuarios.
-- **Envío de correos electrónicos** de confirmación usando nodemailer.
+- **Envío de correos electrónicos** de confirmación usando SendGrid.
 - Manejo de errores y validaciones básicas.
 
 ---
