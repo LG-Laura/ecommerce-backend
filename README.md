@@ -1,7 +1,7 @@
-# Proyecto Backend
-
-Este es el backend creada con Node.js, Express, MySQL, y SendGrid para el envío de correos electrónicos de confirmación tras el registro de usuarios.
-
+      # Proyecto Backend
+<p align="center" style="font-size: 24px;">
+  <strong>🚧Este proyecto está actualmente en fase de desarrollo.</strong><br>
+</p>
 
 ## Características
 
