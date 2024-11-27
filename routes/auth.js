@@ -1,10 +1,12 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-const sgMail = require('@sendgrid/mail'); // Requiere SendGrid
-const router = express.Router();
+const sgMail = require('@sendgrid/mail');
 const jwt = require('jsonwebtoken');
-const authMiddleware = require('../routes/authMiddleware'); // Importar el middleware
+const authMiddleware = require('../routes/authMiddleware');
+const Role = require('../models/role');
+
+const router = express.Router();
 
 // Configuración de SendGrid
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -29,7 +31,7 @@ const sendConfirmationEmail = (email, nombre) => {
 };
 
 // Ruta de registro
-router.post('/register', async (req, res) => {
+router.post('/registro', async (req, res) => {
     const { nombre, apellido, telefono, email, password } = req.body;
 
     // Validación básica
@@ -39,24 +41,35 @@ router.post('/register', async (req, res) => {
 
     try {
         // Verificar si el usuario ya existe
+        console.log('Buscando si el usuario ya existe...');
         let user = await User.findOne({ where: { email } });
         if (user) {
             return res.status(400).json({ msg: 'El usuario ya existe' });
         }
 
-        // Crear un nuevo usuario
+        console.log('Generando el hash de la contraseña...');
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
+
+        console.log('Buscando el rol "user"...');
+        const role = await Role.findOne({ where: { nombre: 'user' } });
+        if (!role) {
+            return res.status(400).json({ msg: 'El rol "user" no existe en la base de datos' });
+        }
+
+        console.log('Creando el nuevo usuario...');
         user = await User.create({
             nombre,
             apellido,
             telefono,
             email,
             password: hashedPassword, // Almacenar la contraseña cifrada
+            roleId: role.id
         });
 
         // Enviar correo de confirmación
         sendConfirmationEmail(email, nombre);
+        console.log('Usuario registrado exitosamente');
 
         res.status(201).json({ msg: 'Usuario registrado exitosamente' });
     } catch (error) {
@@ -69,12 +82,11 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    console.log('Datos recibidos:', req.body);
-
     try {
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ where: { email} });
+
         if (!user) {
-            return res.status(400).json({ msg: 'usuario no encontrado.' });
+            return res.status(400).json({ msg: 'Usuario no encontrado.' });
         }
 
         // Comparar la contraseña
@@ -85,7 +97,7 @@ router.post('/login', async (req, res) => {
 
          // Crear un token JWT
          const token = jwt.sign(
-            { id: user.id, email: user.email }, // Datos del usuario que se almacenarán en el token
+            { id: user.id, email: user.email, roleId: user.roleId }, // Datos del usuario que se almacenarán en el token
             process.env.JWT_SECRET, // Llave secreta (asegúrate de definir esta variable en tu archivo .env)
             { expiresIn: '1h' } // El token expirará en 1 hora 
         );
@@ -98,7 +110,8 @@ router.post('/login', async (req, res) => {
             user: {
                 id: user.id,
                 nombre: user.nombre,
-                email: user.email
+                email: user.email,
+                roleId: user.roleId
             }
         });
 
@@ -115,3 +128,4 @@ router.get('/protected', authMiddleware, (req, res) => {
 });
 
 module.exports = router;
+
