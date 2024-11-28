@@ -17,7 +17,7 @@ const cartRoutes = require('./routes/cart');
 
 
 // Cargar variables de entorno
-dotenv.config();
+dotenv.config(); 
 
 // Conectar a la base de datos
 connectDB();
