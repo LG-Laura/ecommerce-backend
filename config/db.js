@@ -3,11 +3,36 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 
-// Crea instancia de Sequelize con los datos de conexión
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST, 
-    dialect: 'mysql',          
-});
+// Configuración de Sequelize según el entorno
+let sequelize;
+
+if (process.env.NODE_ENV === 'development') {
+    // Conexión a MySQL para entorno local
+    sequelize = new Sequelize(
+        process.env.DB_NAME,      // Nombre de la base de datos
+        process.env.DB_USER,      // Usuario de MySQL
+        process.env.DB_PASSWORD,  // Contraseña de MySQL
+        {
+            host: process.env.DB_HOST,    // Host (localhost para desarrollo)
+            dialect: 'mysql',             // Dialecto MySQL
+            port: process.env.DB_PORT || 3306,  // Puerto (3306 para MySQL)
+            logging: true,                // Habilitar logs solo en desarrollo
+        }
+    );
+} else {
+    // Conexión a PostgreSQL para producción (Render)
+    sequelize = new Sequelize(
+        process.env.DB_NAME,      
+        process.env.DB_USER,      
+        process.env.DB_PASSWORD,  
+        {
+            host: process.env.DB_HOST,   
+            dialect: 'postgres',          
+            port: process.env.DB_PORT || 5432,  
+            logging: false,               
+        }
+    );
+}
 
 // Conexión a la base de datos
 const connectDB = async () => {
