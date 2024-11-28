@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'development') {
         {
             host: process.env.DB_HOST,    // Host (localhost para desarrollo)
             dialect: 'mysql',             // Dialecto MySQL
-            port: process.env.DB_PORT || 3306,  // Puerto (3306 para MySQL)
+            port: process.env.DB_PORT || 5000,  // Puerto (3306 para MySQL)
             logging: true,                // Habilitar logs solo en desarrollo
         }
     );
