@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
 const bcrypt = require('bcryptjs');
+const Role = require('./role');
 
 // Definir el modelo de Usuario
 const User = sequelize.define('User', {
@@ -27,6 +28,8 @@ const User = sequelize.define('User', {
     }
 });
 
+User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
+
 // // Encriptar la contraseña antes de guardar el usuario
 // User.beforeCreate(async (user) => {
 //     const salt = await bcrypt.genSalt(10);
@@ -34,3 +37,4 @@ const User = sequelize.define('User', {
 // });
 
 module.exports = User;
+

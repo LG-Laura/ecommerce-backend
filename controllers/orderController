@@ -1,0 +1,30 @@
+// controllers/orderController.js
+const { Order, OrderItem, Product } = require('../models');
+
+exports.createOrder = async (req, res) => {
+    try {
+        const userId = req.user.id; // Usuario autenticado
+        const { cartItems, total } = req.body;
+
+        // Crear la orden
+        const newOrder = await Order.create({
+            userId,
+            total,
+            orderStatusId: 1, // Estado inicial
+        });
+
+        // Registrar los productos en OrderItem
+        const orderItems = cartItems.map(item => ({
+            orderId: newOrder.id,
+            productId: item.productId,
+            cantidad: item.quantity,
+            precioUnitario: item.precio,
+        }));
+        await OrderItem.bulkCreate(orderItems);
+
+        res.status(201).json({ success: true, orderId: newOrder.id });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Error al registrar la orden' });
+    }
+};
