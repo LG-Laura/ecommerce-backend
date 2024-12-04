@@ -1,5 +1,6 @@
 // config/db.js
 const { Sequelize } = require('sequelize');
+const { Client } = require('pg');
 require('dotenv').config(); 
 // Configura Sequelize usando la URL de conexión proporcionada por Render
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
