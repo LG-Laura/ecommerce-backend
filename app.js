@@ -48,8 +48,8 @@ app.use('/api/users', cartRoutes);
 // Sincroniza el modelo con la base de datos
 const syncModels = async () => {
     try {
-        await User.sync({ force: false });
         await Role.sync({ force: false });
+        await User.sync({ force: false });
         await Category.sync({ force: false });
         await Product.sync({ force: false });
         await OrderStatus.sync({ force: false   });
