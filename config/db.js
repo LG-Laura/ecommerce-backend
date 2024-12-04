@@ -1,19 +1,18 @@
 // config/db.js
 const { Sequelize } = require('sequelize');
 require('dotenv').config(); 
-
-// Configuración de Sequelize para PostgreSQL
-const sequelize = new Sequelize(
-    process.env.DB_NAME,        
-    process.env.DB_USER,        
-    process.env.DB_PASSWORD,    
-    {
-        host: process.env.DB_HOST, 
-        dialect: 'postgres',       
-        logging: false,            
-        port: process.env.DB_PORT || 5432, 
-    }
-);
+// Configura Sequelize usando la URL de conexión proporcionada por Render
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    protocol: 'postgres',
+    logging: false, 
+    dialectOptions: {
+        ssl: {
+            require: true, 
+            rejectUnauthorized: false, 
+        },
+    },
+});
 
 // Conexión a la base de datos
 const connectDB = async () => {
