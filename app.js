@@ -49,19 +49,16 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/users', cartRoutes);
 
 
-
-
-// Sincroniza el modelo con la base de datos
 const syncModels = async () => {
     try {
         await Role.sync({ force: false });
         await User.sync({ force: false });
         await Category.sync({ force: false });
         await Product.sync({ force: false });
-        await OrderStatus.sync({ force: false   });
-        await Order.sync({ force: false });  
+        await OrderStatus.sync({ force: false });
+        await Order.sync({ force: false });
         await OrderItem.sync({ force: false });
-        await Cart.sync({ force: false  });
+        await Cart.sync({ force: false });
 
         // Agregar roles por defecto si no existen
         const rolesExist = await Role.count();
@@ -72,21 +69,48 @@ const syncModels = async () => {
             ]);
         }
 
-        // OrderStatus si está vacío
+        // Agregar estados de orden por defecto si no existen
         const estadosExistentes = await OrderStatus.count();
         if (estadosExistentes === 0) {
             await OrderStatus.bulkCreate([
                 { nombre: "En Carrito", descripcion: "Orden en proceso de compra" },
                 { nombre: "Finalizada", descripcion: "Compra completada" },
                 { nombre: "Cancelada", descripcion: "Orden descartada" },
-              ]);              
+            ]);
         }
 
-        console.log('Tablas sincronizadas.');
+        // Agregar categorías por defecto si no existen
+        const categoriasExistentes = await Category.count();
+        if (categoriasExistentes === 0) {
+            await Category.bulkCreate([
+                { nombre: 'Tecnologia' },
+                { nombre: 'Moda' },
+                { nombre: 'Hogar' },
+                { nombre: 'Deportes' },
+            ]);
+        }
+
+        // Agregar productos por defecto si no existen
+        const productosExistentes = await Product.count();
+        if (productosExistentes === 0) {
+            await Product.bulkCreate([
+                {
+                    nombre: 'Laptop Dell XPS 13',
+                    descripcion: 'Esta laptop ultradelgada cuenta con un procesador Intel Core i7, 16GB de RAM y un SSD de 512GB. Con una pantalla 4K y diseño premium, es perfecta para profesionales y creativos en movimiento.',
+                    precio: 1499000,
+                    stock: 20,
+                    imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgLaptopDell.png',
+                    categoriaId: 1, 
+                },
+            ]);
+        }
+
+        console.log('Tablas sincronizadas y datos iniciales agregados.');
     } catch (error) {
         console.error('Error al sincronizar tablas:', error);
     }
 };
+
 
 
 syncModels();

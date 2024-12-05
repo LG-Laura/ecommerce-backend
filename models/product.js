@@ -6,37 +6,37 @@ const Category = require('./category'); // Importar el modelo de Categoría
 const Product = sequelize.define('Product', {
     nombre: {
         type: DataTypes.STRING,
-        allowNull: false,  // El nombre no puede ser nulo
+        allowNull: false,  
         validate: {
-            notEmpty: true  // Validar que no esté vacío
+            notEmpty: true  
         }
     },
     descripcion: {
         type: DataTypes.STRING,
-        allowNull: false,  // La descripción no puede ser nula
+        allowNull: false,  
         validate: {
-            notEmpty: true  // Validar que no esté vacío
+            notEmpty: true 
         }
     },
     precio: {
         type: DataTypes.FLOAT,
-        allowNull: false,  // El precio no puede ser nulo
+        allowNull: false,  
         validate: {
-            isFloat: true,  // Validar que sea un número decimal
-            min: 0  // El precio no puede ser menor a 0
+            isFloat: true, 
+            min: 0  
         }
     },
     stock: {
         type: DataTypes.INTEGER,
-        allowNull: false,  // El stock no puede ser nulo
+        allowNull: false,  
         validate: {
-            isInt: true,  // Validar que sea un número entero
-            min: 0  // El stock no puede ser negativo
+            isInt: true,  
+            min: 0  
         }
     },
     imageUrl: {
-        type: DataTypes.STRING,  // Almacenar la URL de la imagen
-        allowNull: true,  // La imagen es opcional
+        type: DataTypes.STRING,  
+        allowNull: true,  
         // validate: {
         //     isUrl: true  // Validar que sea una URL válida si es proporcionada
         // }
@@ -45,14 +45,14 @@ const Product = sequelize.define('Product', {
 
 // Definir la relación: un producto pertenece a una categoría
 Product.belongsTo(Category, {
-    foreignKey: 'categoriaId',  // La clave foránea en la tabla de productos
-    as: 'categoria'  // Alias para acceder a la categoría desde el producto
+    foreignKey: 'categoriaId',  
+    as: 'categoria' 
 });
 
 // La relación inversa, donde una categoría tiene muchos productos
 Category.hasMany(Product, {
-    foreignKey: 'categoriaId',  // La clave foránea en la tabla de productos
-    as: 'productos'  // Alias para acceder a los productos desde la categoría
+    foreignKey: 'categoriaId', 
+    as: 'productos'  
 });
 
 module.exports = Product;
