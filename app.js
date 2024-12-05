@@ -93,40 +93,45 @@ const syncModels = async () => {
         // Agregar productos por defecto si no existen
         const productosExistentes = await Product.count();
         if (productosExistentes === 0) {
-            await Product.bulkCreate([
-                {
-                    nombre: 'Reloj Inteligente Apple Watch Series 8',
-                    descripcion: 'El Apple Watch Series 8 incluye monitorización de salud avanzada, seguimiento de actividad física y notificaciones inteligentes. Compatible con iOS, ideal para quienes buscan mantenerse conectados y saludables.',
-                    precio: 399000,
-                    stock: 30,
-                    imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgAppleWatch.png',
-                    categoriaId: 1,
-                },
-                {
-                    nombre: 'PlayStation 5',
-                    descripcion: 'Consola de videojuegos de última generación con gráficos impresionantes y un catálogo de juegos exclusivo. Incluye control DualSense para una experiencia de juego inmersiva.',
-                    precio: 499000,
-                    stock: 50,
-                    imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgPlayStation5.png',
-                    categoriaId: 1,
-                },
-                {
-                    nombre: 'Smartphone Samsung Galaxy S23 Plus 512gb',
-                    descripcion: 'El Samsung Galaxy S23 es un smartphone de alta gama con una pantalla AMOLED de 6.1 pulgadas, procesador Snapdragon 8 Gen 2 y una cámara principal de 50 MP. Ideal para quienes buscan un rendimiento excepcional y una experiencia multimedia envolvente.',
-                    precio: 2199000,
-                    stock: 30,
-                    imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgSmartphoneSamsung.png',
-                    categoriaId: 1,
-                },
-                {
-                    nombre: 'Dron DJI Mini 2',
-                    descripcion: 'Dron compacto y ligero con cámara 4K, ideal para capturar vistas aéreas impresionantes. Ofrece hasta 31 minutos de tiempo de vuelo y es fácil de usar para principiantes.',
-                    precio: 1699000,
-                    stock: 30,
-                    imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/uploads/imgDron.png',
-                    categoriaId: 4,
-                },
-            ]);
+            await Product.bulkCreate(
+                [
+                    {
+                        nombre: 'Reloj Inteligente Apple Watch Series 8',
+                        descripcion: 'El Apple Watch Series 8 incluye monitorización de salud avanzada, seguimiento de actividad física y notificaciones inteligentes. Compatible con iOS, ideal para quienes buscan mantenerse conectados y saludables.',
+                        precio: 399000,
+                        stock: 30,
+                        imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgAppleWatch.png',
+                        categoriaId: 1,
+                    },
+                    {
+                        nombre: 'PlayStation 5',
+                        descripcion: 'Consola de videojuegos de última generación con gráficos impresionantes y un catálogo de juegos exclusivo. Incluye control DualSense para una experiencia de juego inmersiva.',
+                        precio: 499000,
+                        stock: 50,
+                        imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgPlayStation5.png',
+                        categoriaId: 1,
+                    },
+                    {
+                        nombre: 'Smartphone Samsung Galaxy S23 Plus 512gb',
+                        descripcion: 'El Samsung Galaxy S23 es un smartphone de alta gama con una pantalla AMOLED de 6.1 pulgadas, procesador Snapdragon 8 Gen 2 y una cámara principal de 50 MP. Ideal para quienes buscan un rendimiento excepcional y una experiencia multimedia envolvente.',
+                        precio: 2199000,
+                        stock: 30,
+                        imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgSmartphoneSamsung.png',
+                        categoriaId: 1,
+                    },
+                    {
+                        nombre: 'Dron DJI Mini 2',
+                        descripcion: 'Dron compacto y ligero con cámara 4K, ideal para capturar vistas aéreas impresionantes. Ofrece hasta 31 minutos de tiempo de vuelo y es fácil de usar para principiantes.',
+                        precio: 1699000,
+                        stock: 30,
+                        imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/uploads/imgDron.png',
+                        categoriaId: 1,
+                    },
+                ],
+                { updateOnDuplicate: ['descripcion', 'precio', 'stock', 'imageUrl', 'categoriaId'] }
+            );
+            console.log('Productos actualizados o agregados.');
+            
         }
 
         console.log('Tablas sincronizadas y datos iniciales agregados.');
