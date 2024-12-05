@@ -95,12 +95,36 @@ const syncModels = async () => {
         if (productosExistentes === 0) {
             await Product.bulkCreate([
                 {
-                    nombre: 'Laptop Dell XPS 13',
-                    descripcion: 'Esta laptop ultradelgada cuenta con un procesador Intel Core i7, 16GB de RAM y un SSD de 512GB. Con una pantalla 4K y diseño premium, es perfecta para profesionales y creativos en movimiento.',
-                    precio: 1499000,
-                    stock: 20,
-                    imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgLaptopDell.png',
-                    categoriaId: 1, 
+                    nombre: 'Reloj Inteligente Apple Watch Series 8',
+                    descripcion: 'El Apple Watch Series 8 incluye monitorización de salud avanzada, seguimiento de actividad física y notificaciones inteligentes. Compatible con iOS, ideal para quienes buscan mantenerse conectados y saludables.',
+                    precio: 399000,
+                    stock: 30,
+                    imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgAppleWatch.png',
+                    categoriaId: 1,
+                },
+                {
+                    nombre: 'PlayStation 5',
+                    descripcion: 'Consola de videojuegos de última generación con gráficos impresionantes y un catálogo de juegos exclusivo. Incluye control DualSense para una experiencia de juego inmersiva.',
+                    precio: 499000,
+                    stock: 50,
+                    imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgPlayStation5.png',
+                    categoriaId: 1,
+                },
+                {
+                    nombre: 'Smartphone Samsung Galaxy S23 Plus 512gb',
+                    descripcion: 'El Samsung Galaxy S23 es un smartphone de alta gama con una pantalla AMOLED de 6.1 pulgadas, procesador Snapdragon 8 Gen 2 y una cámara principal de 50 MP. Ideal para quienes buscan un rendimiento excepcional y una experiencia multimedia envolvente.',
+                    precio: 2199000,
+                    stock: 30,
+                    imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgSmartphoneSamsung.png',
+                    categoriaId: 1,
+                },
+                {
+                    nombre: 'Dron DJI Mini 2',
+                    descripcion: 'Dron compacto y ligero con cámara 4K, ideal para capturar vistas aéreas impresionantes. Ofrece hasta 31 minutos de tiempo de vuelo y es fácil de usar para principiantes.',
+                    precio: 1699000,
+                    stock: 30,
+                    imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/uploads/imgDron.png',
+                    categoriaId: 4,
                 },
             ]);
         }
