@@ -31,7 +31,7 @@ app.use(express.json()); // Asegúrate de que esta línea esté presente
 app.use(cors({
     origin: 'https://ecommerce-frontend-cade.onrender.com',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    //allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
 
@@ -52,10 +52,10 @@ app.use('/api/users', cartRoutes);
 
 const syncModels = async () => {
     try {
-        await Role.sync({ force: false });
-        await User.sync({ force: false });
+        await Role.sync({ force: true });
+        await User.sync({ force: true });
         await Category.sync({ force: false });
-        await Product.sync({ force: false });
+        await Product.sync({ force: true });
         await OrderStatus.sync({ force: false });
         await Order.sync({ force: false });
         await OrderItem.sync({ force: false });
