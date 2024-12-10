@@ -54,8 +54,8 @@ const syncModels = async () => {
     try {
         await Role.sync({ force: false });
         await User.sync({ force: false });
-        await Category.sync({ force: true });
-        await Product.sync({ force: true });
+        await Category.sync({ force: false });
+        await Product.sync({ force: false });
         await OrderStatus.sync({ force: false });
         await Order.sync({ force: false });
         await OrderItem.sync({ force: false });
