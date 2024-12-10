@@ -27,14 +27,16 @@ connectDB();
 const app = express();
 app.use(express.json()); // Asegúrate de que esta línea esté presente
 
-// Usar CORS
 //app.use(cors());
 app.use(cors({
     origin: 'https://ecommerce-frontend-cade.onrender.com',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
 
+// Usar CORS
+app.options('*', cors());
 
 // Middleware para manejar JSON
 app.use(bodyParser.json());
