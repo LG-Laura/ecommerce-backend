@@ -52,14 +52,14 @@ app.use('/api/users', cartRoutes);
 
 const syncModels = async () => {
     try {
-        await Role.sync({ force: true });
-        await User.sync({ force: true });
-        await Category.sync({ force: true });
-        await Product.sync({ force: true });
-        await OrderStatus.sync({ force: true });
-        await Order.sync({ force: true });
-        await OrderItem.sync({ force: true });
-        await Cart.sync({ force: true });
+        await Role.sync({ force: false });
+        await User.sync({ force: false });
+        await Category.sync({ force: false });
+        await Product.sync({ force: false });
+        await OrderStatus.sync({ force: false });
+        await Order.sync({ force: false });
+        await OrderItem.sync({ force: false });
+        await Cart.sync({ force: false });
 
         // Agregar roles por defecto si no existen
         const rolesExist = await Role.count();
@@ -70,29 +70,29 @@ const syncModels = async () => {
             ]);
         }
 
-        // Crear usuario administrador por defecto
-const adminEmail = 'admin@ecommerce.com';
-const adminPassword = 'admin123'; // Cambia esta contraseña si es necesario
+//         // Crear usuario administrador por defecto
+// const adminEmail = 'admin@ecommerce.com';
+// const adminPassword = 'admin123'; // Cambia esta contraseña si es necesario
 
-const adminExistente = await User.findOne({ where: { email: adminEmail } });
+// const adminExistente = await User.findOne({ where: { email: adminEmail } });
 
-if (!adminExistente) {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(adminPassword, salt);
+// if (!adminExistente) {
+//     const salt = await bcrypt.genSalt(10);
+//     const hashedPassword = await bcrypt.hash(adminPassword, salt);
 
-    await User.create({
-        nombre: 'Administrador',
-        apellido: 'General',
-        telefono: '1234567890',
-        email: adminEmail,
-        password: hashedPassword,
-        roleId: 1 // Asigna el rol "admin" con ID 1
-    });
+//     await User.create({
+//         nombre: 'Administrador',
+//         apellido: 'General',
+//         telefono: '1234567890',
+//         email: adminEmail,
+//         password: hashedPassword,
+//         roleId: 1 // Asigna el rol "admin" con ID 1
+//     });
 
-    console.log('Usuario administrador creado con éxito.');
-} else {
-    console.log('Usuario administrador ya existe.');
-}
+//     console.log('Usuario administrador creado con éxito.');
+// } else {
+//     console.log('Usuario administrador ya existe.');
+// }
 
         // Agregar estados de orden por defecto si no existen
         const estadosExistentes = await OrderStatus.count();
