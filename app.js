@@ -12,6 +12,7 @@ const path = require('path');
 const Order = require('./models/order');
 const OrderItem = require('./models/orderItem');
 const OrderStatus = require('./models/orderStatus');
+const bcrypt = require('bcryptjs');
 
 const cartRoutes = require('./routes/cart');
 
@@ -51,14 +52,14 @@ app.use('/api/users', cartRoutes);
 
 const syncModels = async () => {
     try {
-        await Role.sync({ force: false });
-        await User.sync({ force: false });
-        await Category.sync({ force: false });
-        await Product.sync({ force: false });
-        await OrderStatus.sync({ force: false });
-        await Order.sync({ force: false });
-        await OrderItem.sync({ force: false });
-        await Cart.sync({ force: false });
+        await Role.sync({ force: true });
+        await User.sync({ force: true });
+        await Category.sync({ force: true });
+        await Product.sync({ force: true });
+        await OrderStatus.sync({ force: true });
+        await Order.sync({ force: true });
+        await OrderItem.sync({ force: true });
+        await Cart.sync({ force: true });
 
         // Agregar roles por defecto si no existen
         const rolesExist = await Role.count();
@@ -68,6 +69,30 @@ const syncModels = async () => {
                 { nombre: 'user' }
             ]);
         }
+
+        // Crear usuario administrador por defecto
+const adminEmail = 'admin@ecommerce.com';
+const adminPassword = 'admin123'; // Cambia esta contraseña si es necesario
+
+const adminExistente = await User.findOne({ where: { email: adminEmail } });
+
+if (!adminExistente) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(adminPassword, salt);
+
+    await User.create({
+        nombre: 'Administrador',
+        apellido: 'General',
+        telefono: '1234567890',
+        email: adminEmail,
+        password: hashedPassword,
+        roleId: 1 // Asigna el rol "admin" con ID 1
+    });
+
+    console.log('Usuario administrador creado con éxito.');
+} else {
+    console.log('Usuario administrador ya existe.');
+}
 
         // Agregar estados de orden por defecto si no existen
         const estadosExistentes = await OrderStatus.count();
@@ -124,7 +149,7 @@ const syncModels = async () => {
                         descripcion: 'Dron compacto y ligero con cámara 4K, ideal para capturar vistas aéreas impresionantes. Ofrece hasta 31 minutos de tiempo de vuelo y es fácil de usar para principiantes.',
                         precio: 1699000,
                         stock: 30,
-                        imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/uploads/imgDron.png',
+                        imageUrl: 'http://ecommerce-backend-vevb.onrender.com/uploads/imgDron.png',
                         categoriaId: 1,
                     },
                 ],
