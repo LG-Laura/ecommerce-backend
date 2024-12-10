@@ -35,8 +35,6 @@ app.use(cors({
     credentials: true
 }));
 
-// Usar CORS
-app.options('*', cors());
 
 // Middleware para manejar JSON
 app.use(bodyParser.json());
