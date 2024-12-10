@@ -71,28 +71,28 @@ const syncModels = async () => {
         }
 
 //         // Crear usuario administrador por defecto
-// const adminEmail = 'admin@ecommerce.com';
-// const adminPassword = 'admin123'; // Cambia esta contraseña si es necesario
+const adminEmail = 'admin@ecommerce.com';
+const adminPassword = 'admin123'; // Cambia esta contraseña si es necesario
 
-// const adminExistente = await User.findOne({ where: { email: adminEmail } });
+const adminExistente = await User.findOne({ where: { email: adminEmail } });
 
-// if (!adminExistente) {
-//     const salt = await bcrypt.genSalt(10);
-//     const hashedPassword = await bcrypt.hash(adminPassword, salt);
+if (!adminExistente) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(adminPassword, salt);
 
-//     await User.create({
-//         nombre: 'Administrador',
-//         apellido: 'General',
-//         telefono: '1234567890',
-//         email: adminEmail,
-//         password: hashedPassword,
-//         roleId: 1 // Asigna el rol "admin" con ID 1
-//     });
+    await User.create({
+        nombre: 'Administrador',
+        apellido: 'General',
+        telefono: '1234567890',
+        email: adminEmail,
+        password: hashedPassword,
+        roleId: 1 // Asigna el rol "admin" con ID 1
+    });
 
-//     console.log('Usuario administrador creado con éxito.');
-// } else {
-//     console.log('Usuario administrador ya existe.');
-// }
+    console.log('Usuario administrador creado con éxito.');
+} else {
+    console.log('Usuario administrador ya existe.');
+}
 
         // Agregar estados de orden por defecto si no existen
         const estadosExistentes = await OrderStatus.count();

@@ -30,11 +30,11 @@ const User = sequelize.define('User', {
 
 User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
 
-// // Encriptar la contraseña antes de guardar el usuario
-// User.beforeCreate(async (user) => {
-//     const salt = await bcrypt.genSalt(10);
-//     user.password = await bcrypt.hash(user.password, salt);
-// });
+// Encriptar la contraseña antes de guardar el usuario
+User.beforeCreate(async (user) => {
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+});
 
 module.exports = User;
 
